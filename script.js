@@ -22,14 +22,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // Автоматично перевіряємо підписку після завантаження
-    checkSubscription();
+    await checkSubscription();  // Чекаємо результат
 
     // Функція перевірки підписки
     async function checkSubscription() {
         let response = await fetch("https://botsfortg.pythonanywhere.com/check_subscription", {
-            method: "GET",  // Змінено на GET
+            method: "GET",  
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: user.id })  // В GET запитах тіло не завжди передається
+            body: JSON.stringify({ user_id: user.id })  
         });
 
         let data = await response.json();
@@ -46,15 +46,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                 })
             });
 
+            // Активуємо кнопки
             [btnChannels, btnTasks, btnRoulette, btnReferral].forEach(btn => {
                 btn.classList.remove("disabled");
                 btn.removeAttribute("disabled");
             });
 
-            showScreen(mainScreen);
+            showScreen(mainScreen); // Показуємо головний екран
         } else {
             alert("❌ Ви не підписані на всі необхідні канали!");
-            showScreen(channelsScreen);
+            showScreen(channelsScreen);  // Показуємо екран для підписки
         }
     }
 
@@ -62,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     btnReferral.addEventListener("click", async () => {
         let response = await fetch("https://botsfortg.pythonanywhere.com/get_referral_link", {
-            method: "GET",  // Змінено на GET
+            method: "GET",  
             headers: { "Content-Type": "application/json" }
         });
         let data = await response.json();
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     spinBtn.addEventListener("click", async () => {
         let usersResponse = await fetch("https://botsfortg.pythonanywhere.com/add_referral", {
-            method: "POST",  // Залишено POST, оскільки ми додаємо дані
+            method: "POST",  
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: user.id })
         });
@@ -93,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 let nickname = prompt("🎉 Ви виграли " + wonPrize + "! Введіть свій нікнейм:");
                 if (nickname) {
                     await fetch("https://botsfortg.pythonanywhere.com/win_prize", {
-                        method: "POST",  // Оновлюємо дані про виграний приз
+                        method: "POST",  
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ user_id: user.id, prize: wonPrize, username: nickname })
                     });
