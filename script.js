@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    const btnStart = document.getElementById("btn-start");
     const btnChannels = document.getElementById("btn-channels");
     const btnTasks = document.getElementById("btn-tasks");
     const btnRoulette = document.getElementById("btn-roulette");
@@ -21,9 +22,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         screen.classList.remove("hidden");
     }
 
-    btnChannels.addEventListener("click", () => showScreen(channelsScreen));
+    // Реєстрація юзера після натискання "Старт"
+    btnStart.addEventListener("click", async () => {
+        let response = await fetch("https://botsfortg.pythonanywhere.com/start", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: user.id })
+        });
 
-    btnCheckSubscription.addEventListener("click", async () => {
+        let data = await response.json();
+        alert(data.message);
+
+        // Після старту одразу перевіряємо підписку
+        checkSubscription();
+    });
+
+    // Функція перевірки підписки
+    async function checkSubscription() {
         let response = await fetch("https://botsfortg.pythonanywhere.com/check_subscription", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -33,15 +48,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         let data = await response.json();
         if (data.success) {
             alert("✅ Підписка підтверджена!");
-            [btnTasks, btnRoulette, btnReferral].forEach(btn => {
+            [btnChannels, btnTasks, btnRoulette, btnReferral].forEach(btn => {
                 btn.classList.remove("disabled");
                 btn.removeAttribute("disabled");
             });
-            showScreen(mainScreen);
         } else {
             alert("❌ Ви не підписані на всі необхідні канали!");
         }
-    });
+    }
 
     btnReferral.addEventListener("click", async () => {
         let response = await fetch("https://botsfortg.pythonanywhere.com/get_referral_link", {
@@ -50,8 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             body: JSON.stringify({ user_id: user.id })
         });
         let data = await response.json();
-        let refLink = data.referral_link;
-        navigator.clipboard.writeText(refLink);
+        navigator.clipboard.writeText(data.referral_link);
         alert("🔗 Ваше реферальне посилання скопійовано!");
     });
 
