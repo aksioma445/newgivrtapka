@@ -21,22 +21,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         screen.classList.remove("hidden");
     }
 
-    // Автоматично перевіряємо підписку після завантаження
-    await checkSubscription();  // Чекаємо результат
+    // Автоматичне перевірка підписки після завантаження
+    await checkSubscription();
 
-    // Функція перевірки підписки
+    // Функція перевірки підписки (GET запит)
     async function checkSubscription() {
-        let response = await fetch("https://botsfortg.pythonanywhere.com/check_subscription", {
-            method: "GET",  
+        let response = await fetch(`https://botsfortg.pythonanywhere.com/check_subscription?user_id=${user.id}`, {
+            method: "GET",  // GET запит
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: user.id })  
         });
 
         let data = await response.json();
         if (data.success) {
             alert("✅ Підписка підтверджена!");
             
-            // Відправляємо у бот, що користувач підписався
+            // Відправляємо у бот, що користувач підписався (POST запит)
             await fetch(`https://api.telegram.org/bot6927435499:AAHtbYuUDk-6n8sl4XvS1X6vj4HUe43OUAQ/sendMessage`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -52,15 +51,19 @@ document.addEventListener("DOMContentLoaded", async () => {
                 btn.removeAttribute("disabled");
             });
 
-            showScreen(mainScreen); // Показуємо головний екран
+            showScreen(mainScreen);
         } else {
             alert("❌ Ви не підписані на всі необхідні канали!");
-            showScreen(channelsScreen);  // Показуємо екран для підписки
+            showScreen(channelsScreen);
         }
     }
 
-    btnCheckSubscription.addEventListener("click", checkSubscription);
+    // Перевірка підписки при натисканні
+    btnCheckSubscription.addEventListener("click", async () => {
+        await checkSubscription();
+    });
 
+    // Реферальне посилання (GET запит)
     btnReferral.addEventListener("click", async () => {
         let response = await fetch("https://botsfortg.pythonanywhere.com/get_referral_link", {
             method: "GET",  
@@ -71,6 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("🔗 Ваше реферальне посилання скопійовано!");
     });
 
+    // Спін рулетки (POST запит)
     spinBtn.addEventListener("click", async () => {
         let usersResponse = await fetch("https://botsfortg.pythonanywhere.com/add_referral", {
             method: "POST",  
