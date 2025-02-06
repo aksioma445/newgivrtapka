@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const btnStart = document.getElementById("btn-start");
     const btnChannels = document.getElementById("btn-channels");
     const btnTasks = document.getElementById("btn-tasks");
     const btnRoulette = document.getElementById("btn-roulette");
@@ -22,20 +21,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         screen.classList.remove("hidden");
     }
 
-    // Реєстрація юзера після натискання "Старт"
-    btnStart.addEventListener("click", async () => {
-        let response = await fetch("https://botsfortg.pythonanywhere.com/start", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: user.id })
-        });
-
-        let data = await response.json();
-        alert(data.message);
-
-        // Після старту одразу перевіряємо підписку
-        checkSubscription();
-    });
+    // Автоматично перевіряємо підписку після завантаження
+    checkSubscription();
 
     // Функція перевірки підписки
     async function checkSubscription() {
