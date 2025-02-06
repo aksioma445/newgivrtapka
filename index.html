@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="main-screen" class="screen">
+            <h1>Ласкаво просимо в Mini App</h1>
+            <p>Виконуйте завдання та вигравайте призи!</p>
+            <div class="button-panel">
+                <button id="btn-channels" class="active">📢 Канали</button>
+                <button id="btn-tasks" class="disabled" disabled>🎯 Доп. завдання</button>
+                <button id="btn-roulette" class="disabled" disabled>🎰 Рулетка</button>
+                <button id="btn-referral" class="disabled" disabled>🔗 Реферали</button>
+            </div>
+        </div>
+
+        <div id="channels-screen" class="screen hidden">
+            <h2>📢 Підписка на канали</h2>
+            <p>Підпишіться на всі канали, щоб продовжити.</p>
+            <div id="channel-list">
+                <button class="channel-btn" data-channel="@cryptochampion07">🔗 @cryptochampion07</button>
+            </div>
+            <button id="btn-check-subscription">✅ Перевірити підписку</button>
+        </div>
+
+        <div id="roulette-screen" class="screen hidden">
+            <h2>🎰 Рулетка</h2>
+            <div id="roulette">
+                <div class="grid">
+                    <div class="cell">🔹</div> <div class="cell">🔸</div> <div class="cell">💰</div>
+                    <div class="cell">🎁</div> <div id="spin-btn">GO</div> <div class="cell">🎟</div>
+                    <div class="cell">💎</div> <div class="cell">⚡</div> <div class="cell">🔮</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
