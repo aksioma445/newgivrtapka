@@ -48,14 +48,30 @@ document.addEventListener("DOMContentLoaded", async () => {
         let data = await response.json();
         if (data.success) {
             alert("✅ Підписка підтверджена!");
+            
+            // Відправляємо у бот, що користувач підписався
+            await fetch(`https://api.telegram.org/bot6927435499:AAHtbYuUDk-6n8sl4XvS1X6vj4HUe43OUAQ/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: user.id,
+                    text: "✅ Ви успішно підписалися! Тепер доступні всі завдання у Mini App."
+                })
+            });
+
             [btnChannels, btnTasks, btnRoulette, btnReferral].forEach(btn => {
                 btn.classList.remove("disabled");
                 btn.removeAttribute("disabled");
             });
+
+            showScreen(mainScreen);
         } else {
             alert("❌ Ви не підписані на всі необхідні канали!");
+            showScreen(channelsScreen);
         }
     }
+
+    btnCheckSubscription.addEventListener("click", checkSubscription);
 
     btnReferral.addEventListener("click", async () => {
         let response = await fetch("https://botsfortg.pythonanywhere.com/get_referral_link", {
