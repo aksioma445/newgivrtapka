@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Функція перевірки підписки
     async function checkSubscription() {
         let response = await fetch("https://botsfortg.pythonanywhere.com/check_subscription", {
-            method: "POST",
+            method: "GET",  // Змінено на GET
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: user.id })
+            body: JSON.stringify({ user_id: user.id })  // В GET запитах тіло не завжди передається
         });
 
         let data = await response.json();
@@ -62,9 +62,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     btnReferral.addEventListener("click", async () => {
         let response = await fetch("https://botsfortg.pythonanywhere.com/get_referral_link", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: user.id })
+            method: "GET",  // Змінено на GET
+            headers: { "Content-Type": "application/json" }
         });
         let data = await response.json();
         navigator.clipboard.writeText(data.referral_link);
@@ -73,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     spinBtn.addEventListener("click", async () => {
         let usersResponse = await fetch("https://botsfortg.pythonanywhere.com/add_referral", {
-            method: "POST",
+            method: "POST",  // Залишено POST, оскільки ми додаємо дані
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: user.id })
         });
@@ -94,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 let nickname = prompt("🎉 Ви виграли " + wonPrize + "! Введіть свій нікнейм:");
                 if (nickname) {
                     await fetch("https://botsfortg.pythonanywhere.com/win_prize", {
-                        method: "POST",
+                        method: "POST",  // Оновлюємо дані про виграний приз
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ user_id: user.id, prize: wonPrize, username: nickname })
                     });
