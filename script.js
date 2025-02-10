@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     ];
 
     const taskChannels = [
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" }
+        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1" },
+        { name: "@bonuschannel2", link: "https://t.me/bonuschannel2" }
     ];
 
     const btnChannels = document.getElementById("btn-channels");
@@ -28,7 +29,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     let spins = parseInt(localStorage.getItem("spins")) || 0;
     let subscribed = localStorage.getItem("subscribed") === "true";
     let visitedChannels = new Set(JSON.parse(localStorage.getItem("visitedChannels")) || []);
-    
+    let subscribedOnce = localStorage.getItem("subscribedOnce") === "true";
+    let completedTasks = new Set(JSON.parse(localStorage.getItem("completedTasks")) || []);
+
     updateSpinCount();
     checkSubscribedStatus();
 
@@ -64,10 +67,39 @@ document.addEventListener("DOMContentLoaded", async () => {
         btnSubscribed.setAttribute("disabled", "true");
     }
 
+    function renderTaskChannels() {
+        const tasksList = document.getElementById("tasks-list");
+        tasksList.innerHTML = "";
+
+        taskChannels.forEach(channel => {
+            let button = document.createElement("button");
+            button.className = "task-btn";
+            button.textContent = `🔗 ${channel.name}`;
+            button.disabled = completedTasks.has(channel.name); // Блок кнопки, якщо вже отримав спін
+
+            button.onclick = () => {
+                if (completedTasks.has(channel.name)) {
+                    alert("⚠️ Ви вже отримали спін за цей канал!");
+                    return;
+                }
+
+                window.open(channel.link, "_blank");
+                completedTasks.add(channel.name);
+                localStorage.setItem("completedTasks", JSON.stringify([...completedTasks]));
+                
+                spins += 1;
+                updateSpinCount();
+                button.disabled = true; // Блокуємо кнопку після отримання спіну
+            };
+
+            tasksList.appendChild(button);
+        });
+    }
+
     function checkSubscribedStatus() {
         if (subscribed) {
-            btnSubscribed.classList.remove("disabled");
-            btnSubscribed.removeAttribute("disabled");
+            btnSubscribed.classList.add("disabled");
+            btnSubscribed.setAttribute("disabled", "true");
             [btnTasks, btnRoulette, btnReferral].forEach(btn => {
                 btn.classList.remove("disabled");
                 btn.removeAttribute("disabled");
@@ -84,6 +116,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     btnTasks.addEventListener("click", () => {
+        renderTaskChannels();
         showScreen(tasksScreen);
     });
 
@@ -100,10 +133,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             alert("❌ Ви повинні відкрити всі канали перед підтвердженням підписки!");
             return;
         }
+        if (subscribedOnce) {
+            alert("⚠️ Ви вже отримали спін за підписку!");
+            return;
+        }
 
         alert("✅ Підписка підтверджена!");
         subscribed = true;
+        subscribedOnce = true;
         localStorage.setItem("subscribed", "true");
+        localStorage.setItem("subscribedOnce", "true");
+
+        btnSubscribed.classList.add("disabled");
+        btnSubscribed.setAttribute("disabled", "true");
 
         [btnTasks, btnRoulette, btnReferral].forEach(btn => {
             btn.classList.remove("disabled");
