@@ -91,3 +91,28 @@ body {
 .cell.highlight {
     background: #ffcc00;
 }
+
+#btn-subscribed {
+    background-color: #28a745;
+    color: white;
+    font-size: 18px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    width: 80%;
+    max-width: 300px;
+    margin-top: 15px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#btn-subscribed.disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+#btn-subscribed:not(.disabled):active {
+    background-color: #218838;
+    transform: scale(0.95);
+}
