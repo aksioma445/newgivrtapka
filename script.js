@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const botToken = "6927435499:AAHtbYuUDk-6n8sl4XvS1X6vj4HUe43OUAQ";
-    const chatId = "6927435499"; 
+    const chatId = "6927435499";
 
     const channels = [
         { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" }
@@ -25,9 +25,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const referralScreen = document.getElementById("referral-screen");
     const mainScreen = document.getElementById("main-screen");
 
-    let spins = 0;
-    let visitedChannels = new Set();
+    let spins = parseInt(localStorage.getItem("spins")) || 0;
+    let subscribed = localStorage.getItem("subscribed") === "true";
+    let visitedChannels = new Set(JSON.parse(localStorage.getItem("visitedChannels")) || []);
+    
     updateSpinCount();
+    checkSubscribedStatus();
 
     function showScreen(screen) {
         document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
@@ -36,6 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function updateSpinCount() {
         spinCount.textContent = spins;
+        localStorage.setItem("spins", spins);
     }
 
     function renderChannels() {
@@ -50,6 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             button.onclick = () => {
                 window.open(channel.link, "_blank");
                 visitedChannels.add(channel.name);
+                localStorage.setItem("visitedChannels", JSON.stringify([...visitedChannels]));
                 checkSubscribedStatus();
             };
             channelList.appendChild(button);
@@ -60,26 +65,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function checkSubscribedStatus() {
-        if (visitedChannels.size === channels.length) {
+        if (subscribed) {
+            btnSubscribed.classList.remove("disabled");
+            btnSubscribed.removeAttribute("disabled");
+            [btnTasks, btnRoulette, btnReferral].forEach(btn => {
+                btn.classList.remove("disabled");
+                btn.removeAttribute("disabled");
+            });
+        } else if (visitedChannels.size === channels.length) {
             btnSubscribed.classList.remove("disabled");
             btnSubscribed.removeAttribute("disabled");
         }
-    }
-
-    function renderTaskChannels() {
-        const tasksList = document.getElementById("tasks-list");
-        tasksList.innerHTML = "";
-        taskChannels.forEach(channel => {
-            let button = document.createElement("button");
-            button.className = "task-btn";
-            button.textContent = `🔗 ${channel.name}`;
-            button.onclick = () => {
-                window.open(channel.link, "_blank");
-                spins += 1;
-                updateSpinCount();
-            };
-            tasksList.appendChild(button);
-        });
     }
 
     btnChannels.addEventListener("click", () => {
@@ -88,7 +84,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     btnTasks.addEventListener("click", () => {
-        renderTaskChannels();
         showScreen(tasksScreen);
     });
 
@@ -107,10 +102,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         alert("✅ Підписка підтверджена!");
+        subscribed = true;
+        localStorage.setItem("subscribed", "true");
+
         [btnTasks, btnRoulette, btnReferral].forEach(btn => {
             btn.classList.remove("disabled");
             btn.removeAttribute("disabled");
         });
+
         spins += 1;
         updateSpinCount();
         showScreen(mainScreen);
