@@ -12,25 +12,24 @@
         <div id="main-screen" class="screen">
             <h1>Ласкаво просимо в Mini App</h1>
             <p>Виконуйте завдання та вигравайте призи!</p>
-            <div class="button-panel">
-                <button id="btn-channels" class="disabled" disabled>📢 Канали</button>
-                <button id="btn-tasks" class="disabled" disabled>🎯 Доп. завдання</button>
-                <button id="btn-roulette" class="disabled" disabled>🎰 Рулетка</button>
-                <button id="btn-referral" class="disabled" disabled>🔗 Реферали</button>
-            </div>
         </div>
 
         <div id="channels-screen" class="screen hidden">
             <h2>📢 Підписка на канали</h2>
             <p>Підпишіться на всі канали, щоб продовжити.</p>
-            <div id="channel-list">
-                <button class="channel-btn" data-channel="@cryptochampion07">🔗 @cryptochampion07</button>
-            </div>
-            <button id="btn-check-subscription">✅ Перевірити підписку</button>
+            <div id="channel-list"></div>
+            <button id="btn-subscribed">✅ Підписався</button>
+        </div>
+
+        <div id="tasks-screen" class="screen hidden">
+            <h2>🎯 Додаткові завдання</h2>
+            <p>Отримайте додаткові спроби рулетки!</p>
+            <div id="tasks-list"></div>
         </div>
 
         <div id="roulette-screen" class="screen hidden">
             <h2>🎰 Рулетка</h2>
+            <p>У вас залишилося <span id="spin-count">0</span> спінів</p>
             <div id="roulette">
                 <div class="grid">
                     <div class="cell">🔹</div> <div class="cell">🔸</div> <div class="cell">💰</div>
@@ -39,6 +38,19 @@
                 </div>
             </div>
         </div>
+
+        <div id="referral-screen" class="screen hidden">
+            <h2>🔗 Реферальна система</h2>
+            <p>Запросіть друга і отримайте +1 спробу рулетки!</p>
+            <button id="btn-referral-link">📤 Отримати реферальне посилання</button>
+        </div>
+    </div>
+
+    <div class="button-panel">
+        <button id="btn-channels">📢 Канали</button>
+        <button id="btn-tasks" class="disabled" disabled>🎯 Завдання</button>
+        <button id="btn-roulette" class="disabled" disabled>🎰 Рулетка</button>
+        <button id="btn-referral" class="disabled" disabled>🔗 Реферали</button>
     </div>
 
     <script src="script.js"></script>
