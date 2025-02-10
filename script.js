@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     ];
 
     const taskChannels = [
-        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1" },
-        { name: "@bonuschannel2", link: "https://t.me/bonuschannel2" }
+        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" }
     ];
+
 
     const btnChannels = document.getElementById("btn-channels");
     const btnTasks = document.getElementById("btn-tasks");
@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const spinBtn = document.getElementById("spin-btn");
     const spinCount = document.getElementById("spin-count");
 
-    const mainScreen = document.getElementById("main-screen");
     const channelsScreen = document.getElementById("channels-screen");
     const tasksScreen = document.getElementById("tasks-screen");
     const rouletteScreen = document.getElementById("roulette-screen");
@@ -39,15 +38,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         spinCount.textContent = spins;
     }
 
-    function sendWinMessage(nickname, prize) {
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=🎉 Користувач ${nickname} виграв ${prize}`)
-            .then(() => alert("✅ Дані відправлено адміну!"));
-    }
-
     function renderChannels() {
         const channelList = document.getElementById("channel-list");
         channelList.innerHTML = "";
         visitedChannels.clear();
+
         channels.forEach(channel => {
             let button = document.createElement("button");
             button.className = "channel-btn";
@@ -59,22 +54,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             };
             channelList.appendChild(button);
         });
-    }
 
-    function renderTaskChannels() {
-        const tasksList = document.getElementById("tasks-list");
-        tasksList.innerHTML = "";
-        taskChannels.forEach(channel => {
-            let button = document.createElement("button");
-            button.className = "task-btn";
-            button.textContent = `🔗 ${channel.name}`;
-            button.onclick = () => {
-                window.open(channel.link, "_blank");
-                spins += 1;
-                updateSpinCount();
-            };
-            tasksList.appendChild(button);
-        });
+        // Блокування кнопки "Підписався" поки юзер не відвідає всі канали
+        btnSubscribed.classList.add("disabled");
+        btnSubscribed.setAttribute("disabled", "true");
     }
 
     function checkSubscribedStatus() {
@@ -89,15 +72,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         showScreen(channelsScreen);
     });
 
-    btnTasks.addEventListener("click", () => {
-        renderTaskChannels();
-        showScreen(tasksScreen);
-    });
-
-    btnReferral.addEventListener("click", () => showScreen(referralScreen));
-    btnRoulette.addEventListener("click", () => showScreen(rouletteScreen));
-
     btnSubscribed.addEventListener("click", () => {
+        if (visitedChannels.size < channels.length) {
+            alert("❌ Ви повинні відкрити всі канали перед підтвердженням підписки!");
+            return;
+        }
+
         alert("✅ Підписка підтверджена!");
         [btnTasks, btnRoulette, btnReferral].forEach(btn => {
             btn.classList.remove("disabled");
@@ -105,7 +85,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
         spins += 1;
         updateSpinCount();
-        showScreen(mainScreen);
+        showScreen(document.getElementById("main-screen"));
     });
 
     btnReferralLink.addEventListener("click", () => {
@@ -164,4 +144,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         }, 3000);
     });
+
+    function sendWinMessage(nickname, prize) {
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=🎉 Користувач ${nickname} виграв ${prize}`)
+            .then(() => alert("✅ Дані відправлено адміну!"));
+    }
 });
