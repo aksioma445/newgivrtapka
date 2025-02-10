@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" }
     ];
 
-
     const btnChannels = document.getElementById("btn-channels");
     const btnTasks = document.getElementById("btn-tasks");
     const btnRoulette = document.getElementById("btn-roulette");
@@ -24,6 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tasksScreen = document.getElementById("tasks-screen");
     const rouletteScreen = document.getElementById("roulette-screen");
     const referralScreen = document.getElementById("referral-screen");
+    const mainScreen = document.getElementById("main-screen");
 
     let spins = 0;
     let visitedChannels = new Set();
@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             channelList.appendChild(button);
         });
 
-        // Блокування кнопки "Підписався" поки юзер не відвідає всі канали
         btnSubscribed.classList.add("disabled");
         btnSubscribed.setAttribute("disabled", "true");
     }
@@ -67,9 +66,38 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    function renderTaskChannels() {
+        const tasksList = document.getElementById("tasks-list");
+        tasksList.innerHTML = "";
+        taskChannels.forEach(channel => {
+            let button = document.createElement("button");
+            button.className = "task-btn";
+            button.textContent = `🔗 ${channel.name}`;
+            button.onclick = () => {
+                window.open(channel.link, "_blank");
+                spins += 1;
+                updateSpinCount();
+            };
+            tasksList.appendChild(button);
+        });
+    }
+
     btnChannels.addEventListener("click", () => {
         renderChannels();
         showScreen(channelsScreen);
+    });
+
+    btnTasks.addEventListener("click", () => {
+        renderTaskChannels();
+        showScreen(tasksScreen);
+    });
+
+    btnRoulette.addEventListener("click", () => {
+        showScreen(rouletteScreen);
+    });
+
+    btnReferral.addEventListener("click", () => {
+        showScreen(referralScreen);
     });
 
     btnSubscribed.addEventListener("click", () => {
@@ -85,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
         spins += 1;
         updateSpinCount();
-        showScreen(document.getElementById("main-screen"));
+        showScreen(mainScreen);
     });
 
     btnReferralLink.addEventListener("click", () => {
