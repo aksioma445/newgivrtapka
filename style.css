@@ -9,6 +9,16 @@ body {
     display: none;
 }
 
+.button-panel {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: #1e293b;
+    padding: 10px 0;
+}
+
 .button-panel button {
     background-color: #1e40af;
     color: white;
@@ -16,8 +26,8 @@ body {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    margin: 5px;
     transition: 0.3s;
+    flex-grow: 1;
 }
 
 .button-panel button.disabled {
@@ -26,7 +36,7 @@ body {
     cursor: not-allowed;
 }
 
-.channel-btn {
+.channel-btn, .task-btn {
     display: block;
     background-color: #2563eb;
     color: white;
@@ -65,13 +75,6 @@ body {
     border-radius: 5px;
 }
 
-#spin-btn {
-    background: #3b82f6;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-#spin-btn:hover {
-    background: #2563eb;
+.cell.highlight {
+    background: #ffcc00;
 }
