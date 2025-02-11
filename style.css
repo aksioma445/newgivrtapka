@@ -116,3 +116,30 @@ body {
     background-color: #218838;
     transform: scale(0.95);
 }
+.info-box {
+    background: #1e293b;
+    border: 2px solid #3b82f6;
+    color: #e0f2fe;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(59, 130, 246, 0.5);
+}
+
+.info-box h2 {
+    color: #ffcc00;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.info-box p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.info-box b {
+    color: #ffcc00;
+}
