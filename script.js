@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     btnReferralLink.addEventListener("click", () => {
-        let referralLink = "https://t.me/mybot?start=" + Math.random().toString(36).substring(7);
+        let referralLink = "https://t.me/vipkibotik_bot?start=" + Math.random().toString(36).substring(7);
         navigator.clipboard.writeText(referralLink);
         alert("🔗 Ваше реферальне посилання скопійовано!");
         spins += 1;
