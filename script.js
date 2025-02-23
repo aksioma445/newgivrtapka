@@ -1,14 +1,14 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const botToken = "6927435499:AAHtbYuUDk-6n8sl4XvS1X6vj4HUe43OUAQ";
     const chatId = "6927435499";
 
     const channels = [
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07", img: "channel1.jpg" }
+        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" }
     ];
 
     const taskChannels = [
-        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1", img: "channel2.jpg" },
-        { name: "@bonuschannel2", link: "https://t.me/bonuschannel2", img: "channel3.jpg" }
+        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1" },
+        { name: "@bonuschannel2", link: "https://t.me/bonuschannel2" }
     ];
 
     const btnChannels = document.getElementById("btn-channels");
@@ -48,18 +48,19 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderChannels() {
         const channelList = document.getElementById("channel-list");
         channelList.innerHTML = "";
+        visitedChannels.clear();
 
         channels.forEach(channel => {
-            let channelDiv = document.createElement("div");
-            channelDiv.className = "channel-btn";
-            channelDiv.onclick = () => window.open(channel.link, "_blank");
-
-            let img = document.createElement("img");
-            img.src = channel.img;
-            img.alt = channel.name;
-
-            channelDiv.appendChild(img);
-            channelList.appendChild(channelDiv);
+            let button = document.createElement("button");
+            button.className = "channel-btn";
+            button.textContent = `🔗 ${channel.name}`;
+            button.onclick = () => {
+                window.open(channel.link, "_blank");
+                visitedChannels.add(channel.name);
+                localStorage.setItem("visitedChannels", JSON.stringify([...visitedChannels]));
+                checkSubscribedStatus();
+            };
+            channelList.appendChild(button);
         });
 
         btnSubscribed.classList.add("disabled");
@@ -71,28 +72,27 @@ document.addEventListener("DOMContentLoaded", () => {
         tasksList.innerHTML = "";
 
         taskChannels.forEach(channel => {
-            let channelDiv = document.createElement("div");
-            channelDiv.className = "channel-btn";
-            channelDiv.onclick = () => {
+            let button = document.createElement("button");
+            button.className = "task-btn";
+            button.textContent = `🔗 ${channel.name}`;
+            button.disabled = completedTasks.has(channel.name); // Блок кнопки, якщо вже отримав спін
+
+            button.onclick = () => {
                 if (completedTasks.has(channel.name)) {
                     alert("⚠️ Ви вже отримали спін за цей канал!");
                     return;
                 }
+
                 window.open(channel.link, "_blank");
                 completedTasks.add(channel.name);
                 localStorage.setItem("completedTasks", JSON.stringify([...completedTasks]));
-
+                
                 spins += 1;
                 updateSpinCount();
-                channelDiv.classList.add("disabled");
+                button.disabled = true; // Блокуємо кнопку після отримання спіну
             };
 
-            let img = document.createElement("img");
-            img.src = channel.img;
-            img.alt = channel.name;
-
-            channelDiv.appendChild(img);
-            tasksList.appendChild(channelDiv);
+            tasksList.appendChild(button);
         });
     }
 
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     btnReferralLink.addEventListener("click", () => {
-        let referralLink = `https://t.me/vipkibotik_bot?start=${Date.now()}`;
+        let referralLink = "https://t.me/vipkibotik_bot?start=" + Math.random().toString(36).substring(7);
         navigator.clipboard.writeText(referralLink);
         alert("🔗 Ваше реферальне посилання скопійовано!");
         spins += 1;
@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let prizes = [
             { symbol: "🔹", chance: 99 },
-            { symbol: "💰", chance: 1 }
+            { symbol: "💰", chance: 1 },
         ];
 
         let random = Math.random() * 100;
@@ -191,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let cells = document.querySelectorAll(".cell");
         let index = 0;
+
         let interval = setInterval(() => {
             cells.forEach(cell => cell.classList.remove("highlight"));
             cells[index].classList.add("highlight");
@@ -214,10 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function sendWinMessage(nickname, prize) {
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ chat_id: chatId, text: `🎉 Користувач ${nickname} виграв ${prize}` })
-        }).then(() => alert("✅ Дані відправлено адміну!"));
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=🎉 Користувач ${nickname} виграв ${prize}`)
+            .then(() => alert("✅ Дані відправлено адміну!"));
     }
 });
