@@ -1,10 +1,12 @@
 body {
-    background-color: #0f172a;
+    background-image: url('your-background.jpg'); /* Файл фону */
+    background-size: cover;
+    background-position: center;
     color: #e0f2fe;
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
-    padding-bottom: 70px; /* Запас під кнопками */
+    padding-bottom: 70px;
 }
 
 .hidden {
@@ -17,24 +19,22 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-around;
-    background-color: #1e293b;
-    padding: 10px 5px;
+    background-color: #162447; /* Темно-синій */
+    padding: 10px;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
+    border-radius: 15px 15px 0 0;
 }
 
 .button-panel button {
-    background-color: #1e40af;
-    color: white;
-    border: 2px solid #3b82f6;
-    padding: 12px 5px;
-    font-size: 14px;
+    background: none;
+    border: none;
     cursor: pointer;
-    transition: 0.3s;
     flex-grow: 1;
-    text-align: center;
-    border-radius: 8px;
-    min-width: 25%;
+}
+.button-panel button img {
+    width: 50px;
+    height: 50px;
 }
 
 .button-panel button.disabled {
@@ -48,7 +48,23 @@ body {
     transform: scale(0.95);
 }
 
-.channel-btn, .task-btn {
+.channel-btn {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    cursor: pointer;
+    border: 3px solid #6a5acd; /* Темно-синьо-фіолетова обводка */
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+.channel-btn img {
+    width: 100%;
+    display: block;
+}
+
+.task-btn {
     display: block;
     background-color: #2563eb;
     color: white;
