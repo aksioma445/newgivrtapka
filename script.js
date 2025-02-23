@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
     const botToken = "6927435499:AAHtbYuUDk-6n8sl4XvS1X6vj4HUe43OUAQ";
     const chatId = "6927435499";
 
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         { name: "@bonuschannel2", link: "https://t.me/bonuschannel2" }
     ];
 
+    // Отримуємо кнопки з нижнього меню
     const btnChannels = document.getElementById("btn-channels");
     const btnTasks = document.getElementById("btn-tasks");
     const btnRoulette = document.getElementById("btn-roulette");
@@ -20,11 +21,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const spinBtn = document.getElementById("spin-btn");
     const spinCount = document.getElementById("spin-count");
 
-    const channelsScreen = document.getElementById("channels-screen");
-    const tasksScreen = document.getElementById("tasks-screen");
-    const rouletteScreen = document.getElementById("roulette-screen");
-    const referralScreen = document.getElementById("referral-screen");
-    const mainScreen = document.getElementById("main-screen");
+    // Отримуємо екрани
+    const screens = {
+        main: document.getElementById("main-screen"),
+        channels: document.getElementById("channels-screen"),
+        tasks: document.getElementById("tasks-screen"),
+        roulette: document.getElementById("roulette-screen"),
+        referral: document.getElementById("referral-screen"),
+    };
 
     let spins = parseInt(localStorage.getItem("spins")) || 0;
     let subscribed = localStorage.getItem("subscribed") === "true";
@@ -35,9 +39,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     updateSpinCount();
     checkSubscribedStatus();
 
-    function showScreen(screen) {
-        document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
-        screen.classList.remove("hidden");
+    function showScreen(screenKey) {
+        Object.values(screens).forEach(screen => screen.classList.add("hidden"));
+        screens[screenKey].classList.remove("hidden");
     }
 
     function updateSpinCount() {
@@ -75,7 +79,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             let button = document.createElement("button");
             button.className = "task-btn";
             button.textContent = `🔗 ${channel.name}`;
-            button.disabled = completedTasks.has(channel.name); // Блок кнопки, якщо вже отримав спін
+            button.disabled = completedTasks.has(channel.name);
 
             button.onclick = () => {
                 if (completedTasks.has(channel.name)) {
@@ -89,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 
                 spins += 1;
                 updateSpinCount();
-                button.disabled = true; // Блокуємо кнопку після отримання спіну
+                button.disabled = true;
             };
 
             tasksList.appendChild(button);
@@ -110,22 +114,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    // Події для нижнього меню (кнопки з іконками)
     btnChannels.addEventListener("click", () => {
         renderChannels();
-        showScreen(channelsScreen);
+        showScreen("channels");
     });
 
     btnTasks.addEventListener("click", () => {
         renderTaskChannels();
-        showScreen(tasksScreen);
+        showScreen("tasks");
     });
 
     btnRoulette.addEventListener("click", () => {
-        showScreen(rouletteScreen);
+        showScreen("roulette");
     });
 
     btnReferral.addEventListener("click", () => {
-        showScreen(referralScreen);
+        showScreen("referral");
     });
 
     btnSubscribed.addEventListener("click", () => {
@@ -154,7 +159,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         spins += 1;
         updateSpinCount();
-        showScreen(mainScreen);
+        showScreen("main");
     });
 
     btnReferralLink.addEventListener("click", () => {
