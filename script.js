@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatId = "6927435499";
 
     const channels = [
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" }
+        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07", img: "channel1.jpg" }
     ];
 
     const taskChannels = [
-        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1" },
-        { name: "@bonuschannel2", link: "https://t.me/bonuschannel2" }
+        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1", img: "channel2.jpg" },
+        { name: "@bonuschannel2", link: "https://t.me/bonuschannel2", img: "channel3.jpg" }
     ];
 
     // Отримуємо кнопки з нижнього меню
@@ -51,52 +51,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderChannels() {
         const channelList = document.getElementById("channel-list");
+        if (!channelList) return;
         channelList.innerHTML = "";
         visitedChannels.clear();
 
         channels.forEach(channel => {
-            let button = document.createElement("button");
-            button.className = "channel-btn";
-            button.textContent = `🔗 ${channel.name}`;
-            button.onclick = () => {
-                window.open(channel.link, "_blank");
-                visitedChannels.add(channel.name);
-                localStorage.setItem("visitedChannels", JSON.stringify([...visitedChannels]));
-                checkSubscribedStatus();
-            };
-            channelList.appendChild(button);
-        });
+            let channelDiv = document.createElement("div");
+            channelDiv.className = "channel-btn";
+            channelDiv.onclick = () => window.open(channel.link, "_blank");
 
-        btnSubscribed.classList.add("disabled");
-        btnSubscribed.setAttribute("disabled", "true");
+            let img = document.createElement("img");
+            img.src = channel.img;
+            img.alt = channel.name;
+
+            channelDiv.appendChild(img);
+            channelList.appendChild(channelDiv);
+        });
     }
 
     function renderTaskChannels() {
         const tasksList = document.getElementById("tasks-list");
+        if (!tasksList) return;
         tasksList.innerHTML = "";
 
         taskChannels.forEach(channel => {
-            let button = document.createElement("button");
-            button.className = "task-btn";
-            button.textContent = `🔗 ${channel.name}`;
-            button.disabled = completedTasks.has(channel.name);
+            let channelDiv = document.createElement("div");
+            channelDiv.className = "channel-btn";
+            channelDiv.onclick = () => window.open(channel.link, "_blank");
 
-            button.onclick = () => {
-                if (completedTasks.has(channel.name)) {
-                    alert("⚠️ Ви вже отримали спін за цей канал!");
-                    return;
-                }
+            let img = document.createElement("img");
+            img.src = channel.img;
+            img.alt = channel.name;
 
-                window.open(channel.link, "_blank");
-                completedTasks.add(channel.name);
-                localStorage.setItem("completedTasks", JSON.stringify([...completedTasks]));
-                
-                spins += 1;
-                updateSpinCount();
-                button.disabled = true;
-            };
-
-            tasksList.appendChild(button);
+            channelDiv.appendChild(img);
+            tasksList.appendChild(channelDiv);
         });
     }
 
@@ -115,112 +103,70 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Події для нижнього меню (кнопки з іконками)
-    btnChannels.addEventListener("click", () => {
-        renderChannels();
-        showScreen("channels");
-    });
-
-    btnTasks.addEventListener("click", () => {
-        renderTaskChannels();
-        showScreen("tasks");
-    });
-
-    btnRoulette.addEventListener("click", () => {
-        showScreen("roulette");
-    });
-
-    btnReferral.addEventListener("click", () => {
-        showScreen("referral");
-    });
-
-    btnSubscribed.addEventListener("click", () => {
-        if (visitedChannels.size < channels.length) {
-            alert("❌ Ви повинні відкрити всі канали перед підтвердженням підписки!");
-            return;
-        }
-        if (subscribedOnce) {
-            alert("⚠️ Ви вже отримали спін за підписку!");
-            return;
-        }
-
-        alert("✅ Підписка підтверджена!");
-        subscribed = true;
-        subscribedOnce = true;
-        localStorage.setItem("subscribed", "true");
-        localStorage.setItem("subscribedOnce", "true");
-
-        btnSubscribed.classList.add("disabled");
-        btnSubscribed.setAttribute("disabled", "true");
-
-        [btnTasks, btnRoulette, btnReferral].forEach(btn => {
-            btn.classList.remove("disabled");
-            btn.removeAttribute("disabled");
+    if (btnChannels) {
+        btnChannels.addEventListener("click", () => {
+            renderChannels();
+            showScreen("channels");
         });
+    }
 
-        spins += 1;
-        updateSpinCount();
-        showScreen("main");
-    });
+    if (btnTasks) {
+        btnTasks.addEventListener("click", () => {
+            renderTaskChannels();
+            showScreen("tasks");
+        });
+    }
 
-    btnReferralLink.addEventListener("click", () => {
-        let referralLink = "https://t.me/vipkibotik_bot?start=" + Math.random().toString(36).substring(7);
-        navigator.clipboard.writeText(referralLink);
-        alert("🔗 Ваше реферальне посилання скопійовано!");
-        spins += 1;
-        updateSpinCount();
-    });
+    if (btnRoulette) {
+        btnRoulette.addEventListener("click", () => {
+            showScreen("roulette");
+        });
+    }
 
-    spinBtn.addEventListener("click", () => {
-        if (spins <= 0) {
-            alert("❌ У вас немає спінів.");
-            return;
-        }
-        spins--;
-        updateSpinCount();
+    if (btnReferral) {
+        btnReferral.addEventListener("click", () => {
+            showScreen("referral");
+        });
+    }
 
-        let prizes = [
-            { symbol: "🔹", chance: 99 },
-            { symbol: "💰", chance: 1 },
-        ];
-
-        let random = Math.random() * 100;
-        let total = 0;
-        let result = "🔹";
-        for (let prize of prizes) {
-            total += prize.chance;
-            if (random <= total) {
-                result = prize.symbol;
-                break;
+    if (btnSubscribed) {
+        btnSubscribed.addEventListener("click", () => {
+            if (visitedChannels.size < channels.length) {
+                alert("❌ Ви повинні відкрити всі канали перед підтвердженням підписки!");
+                return;
             }
-        }
-
-        let cells = document.querySelectorAll(".cell");
-        let index = 0;
-
-        let interval = setInterval(() => {
-            cells.forEach(cell => cell.classList.remove("highlight"));
-            cells[index].classList.add("highlight");
-            index = (index + 1) % cells.length;
-        }, 100);
-
-        setTimeout(() => {
-            clearInterval(interval);
-            cells.forEach(cell => cell.classList.remove("highlight"));
-            let winningCell = Math.floor(Math.random() * cells.length);
-            cells[winningCell].textContent = result;
-            alert(`🎉 Ви виграли: ${result}`);
-
-            if (result === "💰") {
-                let nickname = prompt("🎉 Ви виграли 💰! Введіть свій нікнейм:");
-                if (nickname) {
-                    sendWinMessage(nickname, result);
-                }
+            if (subscribedOnce) {
+                alert("⚠️ Ви вже отримали спін за підписку!");
+                return;
             }
-        }, 3000);
-    });
 
-    function sendWinMessage(nickname, prize) {
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=🎉 Користувач ${nickname} виграв ${prize}`)
-            .then(() => alert("✅ Дані відправлено адміну!"));
+            alert("✅ Підписка підтверджена!");
+            subscribed = true;
+            subscribedOnce = true;
+            localStorage.setItem("subscribed", "true");
+            localStorage.setItem("subscribedOnce", "true");
+
+            btnSubscribed.classList.add("disabled");
+            btnSubscribed.setAttribute("disabled", "true");
+
+            [btnTasks, btnRoulette, btnReferral].forEach(btn => {
+                btn.classList.remove("disabled");
+                btn.removeAttribute("disabled");
+            });
+
+            spins += 1;
+            updateSpinCount();
+            showScreen("main");
+        });
+    }
+
+    if (btnReferralLink) {
+        btnReferralLink.addEventListener("click", () => {
+            let referralLink = `https://t.me/vipkibotik_bot?start=${Date.now()}`;
+            navigator.clipboard.writeText(referralLink);
+            alert("🔗 Ваше реферальне посилання скопійовано!");
+            spins += 1;
+            updateSpinCount();
+        });
     }
 });
