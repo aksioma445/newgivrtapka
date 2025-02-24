@@ -18,7 +18,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-around;
-    background-color: #1e293b;
+    background-color: #210088;
     padding: 15px 5px;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
@@ -156,8 +156,8 @@ body {
 
 .channel-card {
     width: 100%; /* Заповнює доступний простір */
-    height: 80px; /* Висота картки */
-    border-radius: 10px; /* Закруглені кути */
+    height: 65px; /* Висота картки */
+    border-radius: 20px; /* Закруглені кути */
     border: 3px solid #8a2be2; /* Фіолетова обводка */
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
