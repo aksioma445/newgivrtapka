@@ -22,8 +22,8 @@ body {
     padding: 15px 5px;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 70px;
 }
 
 .button-panel button {
@@ -36,8 +36,8 @@ body {
 }
 
 .button-panel button img {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
 }
 
 .button-panel button.disabled img {
@@ -133,11 +133,11 @@ body {
 .channel-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 в ряд */
-    gap: 10px;
     padding: 10px;
     width: 100%;
     max-width: 600px; /* Додано для контролю ширини */
     margin: 0 auto; /* Центрування */
+    grid-row-gap: 15px; /* Відстань тільки між рядами */
 }
 
 .channel-avatar {
@@ -155,14 +155,15 @@ body {
 }
 
 .channel-card {
-    width: 100px; /* Ширина картки */
-    height: 80px; /* Висота картки */
+    width: 150px; /* Ширина картки */
+    height: 90px; /* Висота картки */
     border-radius: 10px; /* Закруглені кути */
     border: 3px solid #8a2be2; /* Фіолетова обводка */
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     background-size: cover;
     background-position: center;
+    margin-right: 1px;
 }
 
 
