@@ -46,26 +46,34 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function renderChannels() {
-        const channelList = document.getElementById("channel-list");
-        channelList.innerHTML = "";
-        visitedChannels.clear();
+    const channelList = document.getElementById("channel-list");
+    channelList.innerHTML = "";
 
-        channels.forEach(channel => {
-            let button = document.createElement("button");
-            button.className = "channel-btn";
-            button.textContent = `🔗 ${channel.name}`;
-            button.onclick = () => {
-                window.open(channel.link, "_blank");
-                visitedChannels.add(channel.name);
-                localStorage.setItem("visitedChannels", JSON.stringify([...visitedChannels]));
-                checkSubscribedStatus();
-            };
-            channelList.appendChild(button);
-        });
+    channels.forEach(channel => {
+        let button = document.createElement("div");
+        button.className = "channel-btn";
+        button.onclick = () => {
+            window.open(channel.link, "_blank");
+            visitedChannels.add(channel.name);
+            localStorage.setItem("visitedChannels", JSON.stringify([...visitedChannels]));
+            checkSubscribedStatus();
+        };
 
-        btnSubscribed.classList.add("disabled");
-        btnSubscribed.setAttribute("disabled", "true");
-    }
+        let img = document.createElement("img");
+        img.src = `https://t.me/i/channel/${channel.name.replace("@", "")}`; // Заглушка для аватарки каналу
+
+        let text = document.createElement("span");
+        text.textContent = channel.name;
+
+        button.appendChild(img);
+        button.appendChild(text);
+        channelList.appendChild(button);
+    });
+
+    btnSubscribed.classList.add("disabled");
+    btnSubscribed.setAttribute("disabled", "true");
+}
+
 
     function renderTaskChannels() {
         const tasksList = document.getElementById("tasks-list");
