@@ -43,7 +43,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function renderChannels() {
     const channelList = document.getElementById("channel-list");
-    channelList.innerHTML = "";
+    channelList.innerHTML = ""; // Очистити список перед додаванням
+
+    // Додати клас для сітки
+    channelList.className = "channel-grid";
 
     const channels = [
         { name: "@cryptochampion07", link: "https://t.me/cryptochampion07", image: "https://example.com/image1.jpg" },
