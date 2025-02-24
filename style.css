@@ -97,3 +97,36 @@ body {
 .info-box b {
     color: #ffcc00;
 }
+
+.channel-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.channel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    background-color: #fff;
+    border: 2px solid #8a2be2; /* Фіолетова обводка */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.channel-btn img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.channel-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+
