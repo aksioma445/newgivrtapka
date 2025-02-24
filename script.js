@@ -3,11 +3,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const chatId = "6927435499";
 
     const channels = [
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
         { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" }
     ];
 
