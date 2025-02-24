@@ -19,7 +19,7 @@ body {
     display: flex;
     justify-content: space-around;
     background-color: #210088;
-    padding: 15px 5px;
+    padding: 10px 5px;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     border-top-left-radius: 50px;
