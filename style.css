@@ -155,15 +155,16 @@ body {
 }
 
 .channel-card {
-    width: 100%; /* Заповнює доступний простір */
-    height: 65px; /* Висота картки */
-    border-radius: 20px; /* Закруглені кути */
+    width: 100px; /* Ширина картки */
+    height: 80px; /* Висота картки */
+    border-radius: 10px; /* Закруглені кути */
     border: 3px solid #8a2be2; /* Фіолетова обводка */
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     background-size: cover;
     background-position: center;
 }
+
 
 .channel-card:hover {
     transform: scale(1.05);
