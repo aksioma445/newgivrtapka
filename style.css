@@ -132,7 +132,7 @@ body {
 
 .channel-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 в ряд */
+    grid-template-columns: repeat(3, 1fr); /* 3 в ряд */
     gap: 15px;
     padding: 10px;
     width: 100%;
@@ -155,7 +155,7 @@ body {
 }
 
 .channel-card {
-    width: 120px; /* Ширина картки */
+    width: 100%; /* Заповнює доступний простір */
     height: 80px; /* Висота картки */
     border-radius: 10px; /* Закруглені кути */
     border: 3px solid #8a2be2; /* Фіолетова обводка */
