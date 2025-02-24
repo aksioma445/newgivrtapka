@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     channels.forEach(channel => {
         let img = document.createElement("img");
         img.className = "channel-avatar";
-        img.src = `https://t.me/i/channel/${channel.name.replace("@", "")}`; // Заглушка для аватарки
+        img.src = `https://t.me/i/channel/${channel.name.replace("@", "icon-tasks.png")}`; // Заглушка для аватарки
         img.onclick = () => {
             window.open(channel.link, "_blank");
             visitedChannels.add(channel.name);
