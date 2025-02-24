@@ -130,3 +130,24 @@ body {
     box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
 }
 
+.channel-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 елементи в ряд */
+    gap: 15px;
+    justify-content: center;
+    padding: 10px;
+}
+
+.channel-avatar {
+    width: 70px; /* Розмір аватарки */
+    height: 70px;
+    border-radius: 50%; /* Кругла форма */
+    border: 3px solid #8a2be2; /* Фіолетова обводка */
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.channel-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
