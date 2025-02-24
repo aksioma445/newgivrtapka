@@ -134,9 +134,12 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 в ряд */
     gap: 15px;
-    justify-content: center;
     padding: 10px;
+    width: 100%;
+    max-width: 600px; /* Додано для контролю ширини */
+    margin: 0 auto; /* Центрування */
 }
+
 
 .channel-avatar {
     width: 70px; /* Розмір аватарки */
