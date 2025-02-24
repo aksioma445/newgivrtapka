@@ -2,15 +2,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const botToken = "6927435499:AAHtbYuUDk-6n8sl4XvS1X6vj4HUe43OUAQ";
     const chatId = "6927435499";
 
-    const channels = [
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" },
-        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07" }
-    ];
-
     const taskChannels = [
         { name: "@bonuschannel1", link: "https://t.me/bonuschannel1" },
         { name: "@bonuschannel2", link: "https://t.me/bonuschannel2" }
@@ -54,21 +45,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     const channelList = document.getElementById("channel-list");
     channelList.innerHTML = "";
 
+    const channels = [
+        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07", image: "https://example.com/image1.jpg" },
+        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1", image: "https://example.com/image2.jpg" },
+        { name: "@bonuschannel2", link: "https://t.me/bonuschannel2", image: "https://example.com/image3.jpg" }
+    ];
+
     channels.forEach(channel => {
-        let img = document.createElement("img");
-        img.className = "channel-avatar";
-        img.src = `https://t.me/i/channel/${channel.name.replace("@", "icon-tasks.png")}`; // Заглушка для аватарки
-        img.onclick = () => {
+        let div = document.createElement("div");
+        div.className = "channel-card";
+        div.style.backgroundImage = `url('${channel.image}')`;
+        div.onclick = () => {
             window.open(channel.link, "_blank");
-            visitedChannels.add(channel.name);
-            localStorage.setItem("visitedChannels", JSON.stringify([...visitedChannels]));
-            checkSubscribedStatus();
         };
 
-        channelList.appendChild(img);
+        channelList.appendChild(div);
     });
 }
-
 
 
     function renderTaskChannels() {
