@@ -48,7 +48,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const channels = [
         { name: "@cryptochampion07", link: "https://t.me/cryptochampion07", image: "https://example.com/image1.jpg" },
         { name: "@bonuschannel1", link: "https://t.me/bonuschannel1", image: "https://example.com/image2.jpg" },
-        { name: "@bonuschannel2", link: "https://t.me/bonuschannel2", image: "https://example.com/image3.jpg" }
+        { name: "@bonuschannel2", link: "https://t.me/bonuschannel2", image: "https://example.com/image3.jpg" },
+        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07", image: "https://example.com/image1.jpg" },
+        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1", image: "https://example.com/image2.jpg" },
+        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07", image: "https://example.com/image1.jpg" },
+        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1", image: "https://example.com/image2.jpg" },
+        { name: "@cryptochampion07", link: "https://t.me/cryptochampion07", image: "https://example.com/image1.jpg" },
+        { name: "@bonuschannel1", link: "https://t.me/bonuschannel1", image: "https://example.com/image2.jpg" }
     ];
 
     channels.forEach(channel => {
