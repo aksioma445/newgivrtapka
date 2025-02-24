@@ -36,8 +36,8 @@ body {
 }
 
 .button-panel button img {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
 }
 
 .button-panel button.disabled img {
@@ -155,8 +155,8 @@ body {
 }
 
 .channel-card {
-    width: 150px; /* Ширина картки */
-    height: 90px; /* Висота картки */
+    width: 90px; /* Ширина картки */
+    height: 50px; /* Висота картки */
     border-radius: 10px; /* Закруглені кути */
     border: 3px solid #8a2be2; /* Фіолетова обводка */
     cursor: pointer;
